@@ -21,7 +21,7 @@ class Image extends React.Component {
   }
 
   renderTooltip = props => {
-    let obj = this.image;
+    let {...obj} = this.image;
     delete obj.topleftx;
     delete obj.toplefty;
     delete obj.toprightx;
@@ -30,6 +30,10 @@ class Image extends React.Component {
     delete obj.bottomlefty;
     delete obj.bottomrightx;
     delete obj.bottomrighty;
+    delete obj.img;
+    delete obj.json;
+    delete props.show;
+    
     return (
       <Tooltip {...props}>
         {Object.keys(obj).map(attributeName =>
