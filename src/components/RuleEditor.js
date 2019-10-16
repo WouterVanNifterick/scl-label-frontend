@@ -11,7 +11,7 @@ class RuleEditor extends React.Component {
     }
 
     render (){                
-        console.log("categories",this.state.categories)
+        // console.log("categories",this.state.categories)
         return (
         <div>
 

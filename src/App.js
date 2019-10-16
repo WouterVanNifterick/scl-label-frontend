@@ -6,7 +6,6 @@ import Row from "react-bootstrap/Row";
 import "./App.css";
 import Images from "./components/Images";
 import RuleEditor from "./components/RuleEditor";
-import Nouislider from "nouislider-react";
 import RulesList from "./components/RulesList";
 import { Rule } from "./Rule";
 
@@ -21,7 +20,7 @@ class App extends Component {
       rules: [],
       rule: new Rule(),
       selection: [],
-      categories: [],      
+      categories: [],
       minConf: 500
     };
     this.handleSelectionChanged = this.handleSelectionChanged.bind(this);
@@ -56,6 +55,7 @@ class App extends Component {
     fetch("http://197.132.0.120:3000/categories/")
       .then(res => res.json())
       .then(data => {
+        // console.log('fetched',data.data);
         this.setState({ categories: data.data });
       })
       .catch(console.error);
@@ -95,11 +95,9 @@ class App extends Component {
     let sel = this.state.selection;
     sel[id] = selected;
     let r = this.state.rule;
-    let img = this.state.images.find(i=>i.scl_imageid===id);
-    if(selected)
-        r.AddImage(img);
-    else
-        r.DelImage(img);
+    let img = this.state.images.find(i => i.scl_imageid === id);
+    if (selected) r.AddImage(img);
+    else r.DelImage(img);
 
     // console.log(this.state.selection);
     this.setState(state => ({
@@ -110,76 +108,80 @@ class App extends Component {
 
   handleConfSliderChange() {}
 
+  renderCmbImageCount() {
+    return (
+      <Dropdown>
+        <Dropdown.Toggle variant="secondary" id="cmbImageCount">
+          Max Images: {this.state.limit}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {[5, 10, 50, 100, 200, 500].map(c => (
+            <Dropdown.Item key={c} eventKey={c} onSelect={this.onSelectLimit}>
+              {c}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  }
+
+  renderCmbCategory() {
+    return (
+      <Dropdown>
+        <Dropdown.Toggle variant="secondary" id="cmbCategory">
+          Category: {this.state.category}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item
+              key={0}
+              eventKey={0}
+              onSelect={this.onSelectCategory}
+            >
+              [All]
+            </Dropdown.Item>
+
+          {this.state.categories.map(cat => (
+            <Dropdown.Item
+              key={cat.scl_categoryid}
+              eventKey={cat.scl_categoryid}
+              onSelect={this.onSelectCategory}
+            >
+              {cat.scl_category}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  }
+
+  renderCmbOrderBy() {
+    return (
+      <Dropdown>
+        <Dropdown.Toggle variant="secondary" id="cmbOrderBy">
+          Order: {this.state.orderby}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {["timestamp", "length", "model"].map(c => (
+            <Dropdown.Item key={c} eventKey={c} onSelect={this.onSelectOrder}>
+              {c}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  }
+
   render() {
     return (
       <Container fluid={true} className="Main">
         <Row>
           <Col className="SidePanel">
             <div className="title">Filter</div>
-            <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="cmbImageCount">
-                Max Images: {this.state.limit}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {[5, 10, 50, 100, 200, 500].map(c => (
-                  <Dropdown.Item
-                    key={c}
-                    eventKey={c}
-                    onSelect={this.onSelectLimit}
-                  >
-                    {c}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            {this.renderCmbImageCount()}
             <div>&nbsp;</div>
-
-            <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="cmbCategory">
-                Category: {this.state.category}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {this.state.categories.map(cat => (
-                  <Dropdown.Item
-                    key={cat.scl_categoryid}
-                    eventKey={cat.scl_categoryid}
-                    onSelect={this.onSelectCategory}
-                  >
-                    {cat.scl_category}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            {this.renderCmbCategory()}
             <div>&nbsp;</div>
-            <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="cmbOrderBy">
-                Order: {this.state.orderby}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {["timestamp", "length", "model"].map(c => (
-                  <Dropdown.Item
-                    key={c}
-                    eventKey={c}
-                    onSelect={this.onSelectOrder}
-                  >
-                    {c}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-
-            <Nouislider
-              key={"conf"}
-              id={"conf"}
-              start={127}
-              connect={[true, false]}
-              orientation="vertical"
-              range={{
-                min: 0,
-                max: 255
-              }}
-              onUpdate={this.handleConfSliderChange("conf")}
-            />
+            {this.renderCmbOrderBy()}{" "}            
           </Col>
           <Col>
             <Images
@@ -190,8 +192,9 @@ class App extends Component {
           <Col className="SidePanel">
             <div className="title">Label</div>
             <RulesList rules={this.state.rules} />
-            <RuleEditor rule={this.state.rule}              
-            categories={this.state.categories}
+            <RuleEditor
+              rule={this.state.rule}
+              categories={this.state.categories}
             />
           </Col>
         </Row>
