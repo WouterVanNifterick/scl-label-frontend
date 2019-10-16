@@ -1,22 +1,27 @@
-.App {
-  text-align: center;
+.title{
+  font-weight:bold;
+  margin-bottom:15px;
+  margin-top:15px;
 }
 
-.App-logo {
-  height: 40vmin;
+.Main{
+  display: table;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.SidePanel{
+  background-color: #eee;
+  max-width:300px;
 }
 
-.App-link {
-  color: #09d3ac;
+.dropdown button{
+  width:100%;
+}
+
+.form-check-label{
+  margin-left:5px;
+}
+
+.rules td{
+  font-size:small;
+  border:1px solid gray;
 }

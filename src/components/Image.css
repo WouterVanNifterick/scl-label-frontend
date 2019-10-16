@@ -1,0 +1,131 @@
+a{
+    color: #666;
+    text-decoration: none;
+}
+
+.thumb {
+  display: inline-block;
+  border: 1px solid #CCC;
+  background-color: #eee;
+  margin: 5px;
+  overflow: hidden;
+  text-align: center;
+  width: 150px;
+  height: 233px;
+  white-space: nowrap;
+  border-radius: 4px;
+  cursor: default;
+  -webkit-user-select: none;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+}
+
+.thumb:hover {
+  border-color: black;
+}
+
+.category {
+  font-weight: bold;
+}
+
+.selected {
+  background-color: rgba(128, 128, 255, 0.5);
+  border-color:#88c;
+}
+
+.thumbImg {
+  width: 140px;
+  height: 140px;
+}
+
+.tooltip {
+    width: 480px !important; 
+}
+
+.attribute {
+  color: #999;
+  border-bottom: 1px solid #333;
+  white-space: nowrap;
+  text-align: left;
+  width:100%;
+  overflow-x:hidden;
+}
+.attributeName {
+  width: 115px;
+  color: #ccc;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.attributeValue {
+  
+  color: #fff;
+  display: inline-block;
+  vertical-align: top;
+  
+}
+
+.tooltip-inner{
+    max-width:500px;
+}
+
+.country {
+  float: left;
+  color: white;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-size:x-small;
+  height:200px;
+  min-width:16px;
+}
+
+.plate {
+  opacity: 0.5;
+  font-weight: bold;
+  border: 1px solid gray;
+  border-radius: 3px;
+  background-color: #fff;  
+}
+
+.selected .plate{
+    opacity:1.0;
+}
+
+.plate.NL {
+  background-color: #ff6;
+}
+
+.plate.B{
+    border:2px solid red;
+}
+
+.plate .country {
+  background-color: #33c;
+}
+
+.conf {
+  font-size: x-small;
+  margin-left: 3px;
+  margin-right: 3px;
+  float:right;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.make{
+  margin:0;
+}
+
+.brand {
+  color: #006;
+  font-weight: bold;
+  display:inline-block;
+  font-size:x-small;
+}
+.model {
+  color: #060;
+  font-weight: bold;
+  display:inline-block;
+}
+
+.timestamp {
+    font-size:x-small;
+}
