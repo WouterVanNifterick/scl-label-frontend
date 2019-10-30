@@ -1,0 +1,9 @@
+.fieldLabel{
+    width:70px;
+    font-weight:bold;
+    color:#333
+}
+
+.RuleEditor div{
+    white-space: nowrap;
+}

@@ -25,6 +25,8 @@ class App extends Component {
     };
     this.handleSelectionChanged = this.handleSelectionChanged.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
+    this.onSelectLimit = this.onSelectLimit.bind(this);
+    this.handleSaveRule = this.handleSaveRule.bind(this);
   }
 
   getSelected() {
@@ -75,8 +77,10 @@ class App extends Component {
     let cats = this.state.categories.filter(
       cat => cat.scl_categoryid * 1 === eventKey * 1
     );
-    if (cats.length === 0) return;
-    let cat = cats[0].scl_category;
+    let cat = 0;
+    if (cats.length > 0) 
+      cat = cats[0].scl_category;
+
     this.setState({ showCategoryId: eventKey, category: cat });
     this.getImages(eventKey, this.state.orderby, this.state.limit);
   };
@@ -106,7 +110,21 @@ class App extends Component {
     }));
   }
 
-  handleConfSliderChange() {}
+  handleSaveRule(rule){
+    console.log('saving',rule);
+    fetch("/rules", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(rule)
+  }).then((res) => res.json())
+  .then((data) => console.log(data))
+  .catch((err) => console.log(err))      
+  }
+
+  handleApplyRules(){
+      
+  }
+
 
   renderCmbImageCount() {
     return (
@@ -125,17 +143,17 @@ class App extends Component {
     );
   }
 
-  renderCmbCategory() {
+  renderCmbCategory(id, onChange) {
     return (
       <Dropdown>
-        <Dropdown.Toggle variant="secondary" id="cmbCategory">
-          Category: {this.state.category}
+        <Dropdown.Toggle variant="secondary" id={id}>
+          Category: {this.state.category||'All'}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item
               key={0}
               eventKey={0}
-              onSelect={this.onSelectCategory}
+              onSelect={onChange}
             >
               [All]
             </Dropdown.Item>
@@ -179,9 +197,9 @@ class App extends Component {
             <div className="title">Filter</div>
             {this.renderCmbImageCount()}
             <div>&nbsp;</div>
-            {this.renderCmbCategory()}
+            {this.renderCmbCategory("cmbFilterCategory", this.onSelectCategory)}
             <div>&nbsp;</div>
-            {this.renderCmbOrderBy()}{" "}            
+            {this.renderCmbOrderBy()}{" "}
           </Col>
           <Col>
             <Images
@@ -195,7 +213,8 @@ class App extends Component {
             <RuleEditor
               rule={this.state.rule}
               categories={this.state.categories}
-            />
+              onSaveRule={this.handleSaveRule}
+            />            
           </Col>
         </Row>
       </Container>

@@ -10,17 +10,17 @@ class Image extends React.Component {
     this.state = { selected: this.props.selected };
     this.onSelectionChange = this.props.onSelectionChange;
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleImageClick = this.handleImageClick.bind(this);
   }
 
-  handleClick() {
+  handleImageClick() {
     this.setState(state => ({
         selected: !state.selected
       }));
       this.onSelectionChange(this.image.scl_imageid, !this.state.selected);
   }
 
-  renderTooltip = props => {
+renderTooltip = props => {
     let {...obj} = this.image;
     delete obj.topleftx;
     delete obj.toplefty;
@@ -55,7 +55,7 @@ class Image extends React.Component {
     const descr = this.image.merk + " " + this.image.handelsbenaming;
     return (
       <OverlayTrigger placement="right" overlay={this.renderTooltip}>
-        <span className={classes} key={this.image.scl_imageid} onClick={this.handleClick}>
+        <span className={classes} key={this.image.scl_imageid} onClick={this.handleImageClick}>
           <div className="category">{this.image.scl_category}</div>
           <img            
             className={"thumbImg"}
