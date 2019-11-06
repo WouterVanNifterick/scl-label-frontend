@@ -59,8 +59,8 @@ renderTooltip = props => {
           <div className="category">{this.image.scl_category}</div>
           <img            
             className={"thumbImg"}
-            alt={this.image.filename}
-            src={"http://localhost:3000/" + this.image.img}
+            alt={this.image.filename}            
+            src={"http://197.132.0.120:3000/" + this.image.img}
           />
           <div className="timestamp">
             <a  rel="noopener noreferrer" target="_blank" href={`http://197.132.0.120:3000/${this.image.img}`}>
