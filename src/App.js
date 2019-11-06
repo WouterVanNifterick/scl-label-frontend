@@ -179,7 +179,7 @@ class App extends Component {
           Order: {this.state.orderby}
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          {["timestamp", "length", "model"].map(c => (
+          {["timestamp", "length", "model", "confidence", "country"].map(c => (
             <Dropdown.Item key={c} eventKey={c} onSelect={this.onSelectOrder}>
               {c}
             </Dropdown.Item>
